@@ -42,6 +42,7 @@ class Train(HyperParams):
         x = (text_padded, text_lengths, mel_specgram_padded, mel_specgram_lengths)
         y = (mel_specgram_padded, gate_padded)
         return x, y
+        
     def prepare_data_loader(self):
         hp = HyperParams()
         trainset = TextMelDataset(self.training_files, hp)
