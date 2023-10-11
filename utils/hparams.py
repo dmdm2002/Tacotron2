@@ -1,81 +1,92 @@
 from data.text import symbols
 
 
-################################
-# Experiment Parameters        #
-################################
-epochs = 500,
-iters_per_checkpoint = 1000,
-seed = 1234,
-dynamic_loss_scaling = True,
-fp16_run = False,
-distributed_run = False,
-dist_backend = "nccl",
-dist_url = "tcp://localhost:54321",
-cudnn_enabled = True,
-cudnn_benchmark = False,
-ignore_layers = ['embedding.weight'],
+class HyperParams:
+    def __init__(self):
+        super().__init__()
+        ################################
+        # Experiment Parameters        #
+        ################################
+        self.epochs = 500
+        self.iters_per_checkpoint = 1000
+        self.seed = 1234
+        self.dynamic_loss_scaling = True
+        self.fp16_run = False
+        self.distributed_run = False
+        self.dist_backend = "nccl"
+        self.dist_url = "tcp://localhost:54321"
+        self.cudnn_enabled = True
+        self.cudnn_benchmark = False
+        self.ignore_layers = ['embedding.weight']
 
-################################
-# data Parameters             #
-################################
-load_mel_from_disk = False,
-training_files = 'filelists/ljs_audio_text_train_filelist.txt',
-validation_files = 'filelists/ljs_audio_text_val_filelist.txt',
-text_cleaners = ['english_cleaners'],
+        self.root_path = ''
+        self.ckp_path = f'{self.root_path}/ckp'
+        self.log_path = f'{self.root_path}/log'
+        self.train_output_path = f'{self.root_path}/train_sample'
+        self.valid_sample_path = f'{self.root_path}/valid_sample'
+        self.test_output_path = f'{self.root_path}/test_output'
 
-################################
-# Audio Parameters             #
-################################
-max_wav_value = 32768.0,
-sampling_rate = 22050,
-filter_length = 1024,
-hop_length = 256,
-win_length = 1024,
-n_mel_channels = 80,
-mel_fmin = 0.0,
-mel_fmax = 8000.0,
+        self.device = 'cuda:0'
 
-################################
-# Model Parameters             #
-################################
-n_symbols = len(symbols),
-symbols_embedding_dim = 512,
+        ################################
+        # data Parameters             #
+        ################################
+        self.load_mel_from_disk = False
+        self.training_files = 'filelists/ljs_audio_text_train_filelist.txt'
+        self.validation_files = 'filelists/ljs_audio_text_val_filelist.txt'
+        self.text_cleaners = ['english_cleaners']
 
-# Encoder parameters
-encoder_kernel_size = 5,
-encoder_n_convolutions = 3,
-encoder_embedding_dim = 512,
+        ################################
+        # Audio Parameters             #
+        ################################
+        self.max_wav_value = 32768.0
+        self.sampling_rate = 22050
+        self.filter_length = 1024
+        self.hop_length = 256
+        self.win_length = 1024
+        self.n_mel_channels = 80
+        self.mel_fmin = 0.0
+        self.mel_fmax = 8000.0
 
-# Decoder parameters
-n_frames_per_step = 1,  # currently only 1 is supported
-decoder_rnn_dim = 1024,
-prenet_dim = 256,
-max_decoder_steps = 1000,
-gate_threshold = 0.5,
-p_attention_dropout = 0.1,
-p_decoder_dropout = 0.1,
+        ################################
+        # Model Parameters             #
+        ################################
+        self.n_symbols = len(symbols)
+        self.symbols_embedding_dim = 512
 
-# Attention parameters
-attention_rnn_dim = 1024,
-attention_dim = 128,
+        # Encoder parameters
+        self.encoder_kernel_size = 5
+        self.encoder_n_convolutions = 3
+        self.encoder_embedding_dim = 512
 
-# Location Layer parameters
-attention_location_n_filters = 32,
-attention_location_kernel_size = 31,
+        # Decoder parameters
+        self.n_frames_per_step = 1  # currently only 1 is supported
+        self.decoder_rnn_dim = 1024
+        self.prenet_dim = 256
+        self.max_decoder_steps = 1000
+        self.gate_threshold = 0.5
+        self.p_attention_dropout = 0.1
+        self.p_decoder_dropout = 0.1
 
-# Mel-post processing network parameters
-postnet_embedding_dim = 512,
-postnet_kernel_size = 5,
-postnet_n_convolutions = 5,
+        # Attention parameters
+        self.attention_rnn_dim = 1024
+        self.attention_dim = 128
 
-################################
-# Optimization Hyperparameters #
-################################
-use_saved_learning_rate = False,
-learning_rate = 1e-3,
-weight_decay = 1e-6,
-grad_clip_thresh = 1.0,
-batch_size = 64,
-mask_padding = True  # set model's padded outputs to padded values
-)
+        # Location Layer parameters
+        self.attention_location_n_filters = 32
+        self.attention_location_kernel_size = 31
+
+        # Mel-post processing network parameters
+        self.postnet_embedding_dim = 512
+        self.postnet_kernel_size = 5
+        self.postnet_n_convolutions = 5
+
+        ################################
+        # Optimization Hyperparameters #
+        ################################
+        self.use_saved_learning_rate = False
+        self.learning_rate = 1e-3
+        self.weight_decay = 1e-6
+        self.grad_clip_thresh = 1.0
+        self.batch_size = 64
+        self.mask_padding = True  # set model's padded outputs to padded values
