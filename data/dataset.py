@@ -32,6 +32,7 @@ class TextMelDataset(Dataset):
 
     def get_mel_text_pair(self, audiopath_and_text):
         audiopath, text = audiopath_and_text[0], audiopath_and_text[1]
+        audiopath = f'D:/Side/ETRI/US_Female/wav/{audiopath}.wav'
         text = self._get_text(text)
         mel = self._get_mel(audiopath)
         return text, mel
@@ -44,7 +45,7 @@ class TextMelDataset(Dataset):
                                  f"{self.stft.sampling_rate} SR")
 
             audio_norm = audio / self.max_wav_value
-            audio_norm = audio_norm.unsqeeze(0)
+            audio_norm = audio_norm.unsqueeze(0)
             audio_norm = torch.autograd.Variable(audio_norm, requires_grad=False)
             melspec = self.stft.mel_spectrogram(audio_norm)
             melspec = torch.squeeze(melspec, 0)
@@ -111,5 +112,4 @@ class TextMelCollate:
             gate_padded[i, mel.size(1)-1:] = 1
             output_lengths[i] = mel.size(1)
 
-        return text_padded, input_lengths, mel_padded, gate_padded, \
-            output_lengths
+        return text_padded, input_lengths, mel_padded, output_lengths, gate_padded

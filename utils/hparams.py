@@ -19,7 +19,7 @@ class HyperParams:
         self.cudnn_benchmark = False
         self.ignore_layers = ['embedding.weight']
 
-        self.root_path = ''
+        self.root_path = 'D:/Side/ETRI/BackUp/Tacotron2'
         self.ckp_path = f'{self.root_path}/ckp'
         self.log_path = f'{self.root_path}/log'
         self.train_output_path = f'{self.root_path}/train_sample'
@@ -32,8 +32,8 @@ class HyperParams:
         # data Parameters             #
         ################################
         self.load_mel_from_disk = False
-        self.training_files = 'filelists/ljs_audio_text_train_filelist.txt'
-        self.validation_files = 'filelists/ljs_audio_text_val_filelist.txt'
+        self.training_files = 'D:/Side/ETRI/US_Female/metadata.txt'
+        self.validation_files = 'D:/Side/ETRI/US_Female/metadata.txt'
         self.text_cleaners = ['english_cleaners']
 
         ################################
@@ -88,5 +88,5 @@ class HyperParams:
         self.learning_rate = 1e-3
         self.weight_decay = 1e-6
         self.grad_clip_thresh = 1.0
-        self.batch_size = 64
+        self.batch_size = 16
         self.mask_padding = True  # set model's padded outputs to padded values
